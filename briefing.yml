@@ -1,0 +1,55 @@
+name: Briefing Trasfusionali
+
+on:
+  schedule:
+    # Le Action girano in UTC. 08:00 Europe/Rome = 06:00 UTC (ora legale) o 07:00 UTC (ora solare).
+    # Lanciamo entrambi; la guardia oraria nello script posta una sola volta, alle 8 di Roma.
+    - cron: "0 6 * * *"
+    - cron: "0 7 * * *"
+  workflow_dispatch: {} # avvio manuale (test): bypassa la guardia oraria
+
+permissions:
+  contents: write
+
+concurrency:
+  group: briefing-trasfusionali
+  cancel-in-progress: false
+
+jobs:
+  briefing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Install
+        run: npm install --no-audit --no-fund
+
+      - name: Run
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ANTHROPIC_MODEL: ${{ vars.ANTHROPIC_MODEL }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          TIMEZONE: "Europe/Rome"
+          TARGET_HOUR: "8"
+          NEWS_WINDOW: "14"
+          MEMORY_DAYS: "60"
+          ALWAYS_POST: "false"
+          BYPASS_TIME_GUARD: ${{ github.event_name == 'workflow_dispatch' }}
+        run: npm start
+
+      - name: Persist memoria anti-duplicati
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add state/seen.json 2>/dev/null || true
+          if git diff --staged --quiet; then
+            echo "Nessuna modifica allo stato."
+          else
+            git commit -m "chore: aggiorna memoria briefing [skip ci]"
+            git push
+          fi
