@@ -1,0 +1,16 @@
+{
+  "name": "briefing-trasfusionali",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Agente giornaliero: monitora i reparti trasfusionali (SIMT) di Marche, Abruzzo e Molise e pubblica le novità categorizzate su un canale Telegram.",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "start": "node src/index.js",
+    "test:now": "BYPASS_TIME_GUARD=true node src/index.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": ">=0.30.0",
+    "rss-parser": ">=3.13.0"
+  }
+}
