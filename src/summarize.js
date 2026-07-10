@@ -44,3 +44,16 @@ export async function summarizeRegion(regionName, items, dateLabel) {
     .join("\n")
     .trim();
 }
+// Adattatore per index.js: chiama summarizeRegion una volta per regione.
+export async function summarizeForTelegram(regionsData, dateLabel) {
+  const out = {};
+  for (const r of regionsData) {
+    try {
+      out[r.name] = await summarizeRegion(r.name, r.items, dateLabel);
+    } catch (e) {
+      console.warn(`Sintesi ${r.name} fallita:`, e.message);
+      out[r.name] = "";
+    }
+  }
+  return out;
+}
