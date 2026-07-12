@@ -39,7 +39,7 @@ jobs:
           NEWS_WINDOW: "14"
           MEMORY_DAYS: "60"
           ALWAYS_POST: "false"
-          BYPASS_TIME_GUARD: ${{ github.event_name == 'workflow_dispatch' }}
+         BYPASS_TIME_GUARD: "true"
         run: npm start
 
       - name: Persist memoria anti-duplicati
