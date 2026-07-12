@@ -38,7 +38,7 @@ jobs:
           TARGET_HOUR: "8"
           NEWS_WINDOW: "14"
           MEMORY_DAYS: "60"
-          ALWAYS_POST: "false"
+          ALWAYS_POST: "true"
          BYPASS_TIME_GUARD: "true"
         run: npm start
 
