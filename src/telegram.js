@@ -21,8 +21,11 @@ function toTelegramHtml(text) {
   return out;
 }
 
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
 // Invia un messaggio al canale Telegram. Gli URL vengono compattati in link
-// cliccabili tramite parse_mode HTML.
+// cliccabili tramite parse_mode HTML. Riprova su errori di rete o 5xx/429
+// (un timeout momentaneo non deve far fallire l'intero briefing).
 export async function sendTelegram(text) {
   const { token, chatId } = config.telegram;
   const body = {
@@ -31,14 +34,32 @@ export async function sendTelegram(text) {
     parse_mode: "HTML",
     disable_web_page_preview: true,
   };
-  const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(body),
-  });
-  if (!res.ok) {
-    const t = await res.text().catch(() => "");
-    throw new Error(`Telegram HTTP ${res.status}: ${t}`);
+
+  const maxAttempts = 4;
+  let lastErr;
+  for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(20000),
+      });
+      if (res.ok) return true;
+      // 4xx (tranne 429) = errore permanente: inutile riprovare.
+      if (res.status < 500 && res.status !== 429) {
+        const t = await res.text().catch(() => "");
+        throw new Error(`Telegram HTTP ${res.status}: ${t}`);
+      }
+      lastErr = new Error(`Telegram HTTP ${res.status}`);
+    } catch (e) {
+      lastErr = e;
+    }
+    if (attempt < maxAttempts) {
+      const wait = 2000 * 2 ** (attempt - 1); // 2s, 4s, 8s
+      console.warn(`Invio Telegram fallito (tentativo ${attempt}/${maxAttempts}): ${lastErr.message}. Riprovo tra ${wait / 1000}s...`);
+      await sleep(wait);
+    }
   }
-  return true;
+  throw lastErr;
 }
