@@ -3,7 +3,7 @@ import { config } from "./config.js";
 
 const client = new Anthropic({ apiKey: config.anthropicApiKey });
 
-const SYSTEM = `Sei un analista che prepara brevi notiziari trasfusionali per Telegram, in italiano, per un professionista del settore diagnostico trasfusionale (Grifols Blood Transfusion Solutions) che presidia Marche, Abruzzo e Molise.
+const SYSTEM = `Sei un analista che prepara brevi notiziari trasfusionali per Telegram, in italiano, per un professionista del settore diagnostico trasfusionale (Grifols Blood Transfusion Solutions) che presidia Marche, Abruzzo, Molise, Puglia e Umbria.
 
 Riceverai un elenco di voci GIÀ selezionate come pertinenti e nuove, tutte di UNA singola regione. Tipi di voce:
 - "atto/BUR" = atto ufficiale (Bollettino Regionale, albo, concorso, delibera) → priorità alta, mettilo per primo.

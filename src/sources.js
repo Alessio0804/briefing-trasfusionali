@@ -39,8 +39,11 @@ export const REGIONS = [
   {
     name: "Molise",
     newsQueries: [
-      `${KW} (Molise OR ASReM OR Campobasso OR Isernia OR Termoli)`,
-      `${KW} (Cardarelli Campobasso OR "Veneziale Isernia" OR "San Timoteo Termoli")`,
+      `${KW} (Molise OR ASReM)`,
+      `${KW} (Campobasso OR Bojano OR Larino)`,
+      `${KW} (Isernia OR Venafro OR Agnone)`,
+      `${KW} (Termoli OR "San Timoteo")`,
+      `${KW} ("Cardarelli Campobasso" OR "Veneziale Isernia" OR "Gemelli Molise")`,
       `(nomina OR primario OR "direttore UOC" OR concorso) ("medicina trasfusionale" OR SIMT) Molise`,
     ],
     linkSources: [
@@ -62,6 +65,38 @@ export const REGIONS = [
     linkSources: [
       "https://www.regione.marche.it/Entra-in-Regione/Atti-della-Regione", // best effort
       "http://www.trasfusionalemarche.org/",
+    ],
+  },
+  {
+    name: "Puglia",
+    // Regione grande (6 province): una query per provincia + capoluoghi e ospedali principali.
+    newsQueries: [
+      `${KW} (Puglia OR "coordinamento regionale attività trasfusionali" OR "centro regionale sangue Puglia")`,
+      `${KW} (Bari OR "Policlinico di Bari" OR "San Paolo Bari" OR "Di Venere" OR Altamura OR Monopoli OR Putignano)`,
+      `${KW} (Foggia OR "Policlinico Riuniti" OR "San Giovanni Rotondo" OR "Casa Sollievo della Sofferenza" OR Cerignola OR "San Severo" OR Manfredonia)`,
+      `${KW} (Barletta OR Andria OR Trani OR Bisceglie OR "ASL BT" OR "Bonomo Andria")`,
+      `${KW} (Brindisi OR "Perrino" OR "Francavilla Fontana" OR Ostuni)`,
+      `${KW} (Lecce OR "Vito Fazzi" OR Galatina OR Casarano OR Gallipoli OR Copertino OR Scorrano)`,
+      `${KW} (Taranto OR "SS. Annunziata Taranto" OR "Martina Franca" OR Manduria OR Grottaglie)`,
+      `(nomina OR primario OR "direttore UOC" OR concorso) ("medicina trasfusionale" OR SIMT) Puglia`,
+    ],
+    linkSources: [
+      "https://burp.regione.puglia.it/", // BUR Puglia (best effort)
+      "https://www.sanita.puglia.it/", // portale PugliaSalute: news e concorsi (best effort)
+    ],
+  },
+  {
+    name: "Umbria",
+    // Due province (Perugia, Terni) + principali centri con presidi ospedalieri.
+    newsQueries: [
+      `${KW} (Umbria OR "USL Umbria 1" OR "USL Umbria 2" OR "centro regionale sangue Umbria")`,
+      `${KW} (Perugia OR "Santa Maria della Misericordia" OR Assisi OR "Città di Castello" OR Gubbio OR Castiglione del Lago)`,
+      `${KW} (Foligno OR "San Giovanni Battista Foligno" OR Spoleto OR Todi OR Marsciano)`,
+      `${KW} (Terni OR "Santa Maria di Terni" OR Orvieto OR Narni OR Amelia)`,
+      `(nomina OR primario OR "direttore UOC" OR concorso) ("medicina trasfusionale" OR SIMT) Umbria`,
+    ],
+    linkSources: [
+      "https://www.regione.umbria.it/la-regione/bollettino-ufficiale", // BUR Umbria (best effort)
     ],
   },
 ];

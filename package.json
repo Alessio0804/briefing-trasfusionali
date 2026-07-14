@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Agente giornaliero: monitora i reparti trasfusionali (SIMT) di Marche, Abruzzo e Molise e pubblica le novità categorizzate su un canale Telegram.",
+  "description": "Agente giornaliero: monitora i reparti trasfusionali (SIMT) di Marche, Abruzzo, Molise, Puglia e Umbria e pubblica le novità categorizzate su un canale Telegram.",
   "engines": { "node": ">=20" },
   "scripts": {
     "start": "node src/index.js",
