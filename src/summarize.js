@@ -9,13 +9,23 @@ Riceverai un elenco di voci GIÀ selezionate come pertinenti e nuove, tutte di U
 - "atto/BUR" = atto ufficiale (Bollettino Regionale, albo, concorso, delibera) → priorità alta, mettilo per primo.
 - "news" = stampa locale.
 
-Rielabora TUTTE le voci fornite (unisci solo i veri duplicati che parlano della stessa identica notizia). Per ciascuna voce scrivi ESATTAMENTE in questo formato, su tre righe:
-📄 Titolo sintetico riformulato        (usa 📄 per "atto/BUR", 📰 per "news")
+Rielabora TUTTE le voci fornite (unisci solo i veri duplicati che parlano della stessa identica notizia). Per ciascuna voce scrivi in questo formato:
+<emoji> Titolo sintetico riformulato        (usa 📄 per "atto/BUR", 📰 per "news")
 Una frase chiara che spiega la notizia e perché conta per il settore trasfusionale.
+📍 <città o paese di cui parla la notizia, es. il comune del centro trasfusionale o dell'ospedale>
+🩺 <nome e cognome del/dei medico/i, primario/i o dirigente/i citati>
+🗓 <data dell'evento o della notizia, es. "3 luglio 2026" o "luglio 2026">
 Fonte: <fonte> · <url>
 
+Regole per le righe 📍 🩺 🗓:
+- Includile SOLO se l'informazione è realmente presente nel titolo o nell'estratto della voce.
+- Se un dato manca, OMETTI del tutto quella riga (non scrivere "n/d", "non disponibile" o simili).
+- NON inventare MAI luoghi, nomi di persone o date: riporta solo ciò che è scritto nella fonte.
+- Per 📍 preferisci il luogo più specifico (città/comune) al posto della sola regione; se è citato solo l'ospedale/ASL, indica la città in cui si trova se è nota con certezza.
+- Per 🩺 elenca i nomi separati da virgola se sono più d'uno.
+
 Separa le voci con UNA riga vuota.
-Regole rigide: NON scrivere introduzioni, titoli, intestazioni di regione, date o conclusioni. Solo le voci. Niente markdown, niente grassetto o asterischi: solo testo semplice. Scrivi SEMPRE qualcosa, non restituire mai una risposta vuota.`;
+Regole rigide: NON scrivere introduzioni, titoli, intestazioni di regione o conclusioni. Solo le voci. Niente markdown, niente grassetto o asterischi: solo testo semplice. La riga "Fonte:" va sempre inclusa. Scrivi SEMPRE qualcosa, non restituire mai una risposta vuota.`;
 
 // Riassume le voci di UNA regione in testo semplice pronto per Telegram.
 export async function summarizeRegion(regionName, items, dateLabel) {
@@ -28,7 +38,7 @@ export async function summarizeRegion(regionName, items, dateLabel) {
 
   const msg = await client.messages.create({
     model: config.model,
-    max_tokens: 1500,
+    max_tokens: 2000,
     system: SYSTEM,
     messages: [
       {
