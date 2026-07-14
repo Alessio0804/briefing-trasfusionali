@@ -1,6 +1,6 @@
 # Briefing Trasfusionali → Canale Telegram
 
-Agente che **ogni mattina alle 08:00 (ora di Roma)** controlla le novità sui reparti/servizi trasfusionali (SIMT), officine trasfusionali, Centri Regionali Sangue, piani sangue, nomine di primari, concorsi e delibere in **Marche, Abruzzo e Molise**, e le pubblica su un **canale Telegram dedicato**, **categorizzate per regione** (un messaggio per Abruzzo, Molise, Marche, con hashtag `#trasfusionale #SIMT #Regione`).
+Agente che **ogni mattina alle 08:00 (ora di Roma)** controlla le novità sui reparti/servizi trasfusionali (SIMT), officine trasfusionali, Centri Regionali Sangue, piani sangue, nomine di primari, concorsi e delibere in **Marche, Abruzzo, Molise, Puglia e Umbria**, e le pubblica su un **canale Telegram dedicato**, **categorizzate per regione** (un messaggio per ciascuna regione con novità, con hashtag `#trasfusionale #SIMT #Regione`).
 
 Il post nel canale è anche la **notifica**: Telegram ti avvisa sul telefono. Niente Google Drive, niente server.
 
@@ -12,7 +12,7 @@ Gira su **GitHub Actions** (gratis), con **memoria anti-duplicati**: nel canale 
 
 1. Una volta al giorno (08:00 Roma) lo script raccoglie da:
    - **Google News** (per regione/città/keyword),
-   - **elenchi atti istituzionali** (BUR Abruzzo, delibere Molise, atti Marche, albi/concorsi ASL), da cui prende solo i link con titolo trasfusionale.
+   - **elenchi atti istituzionali** (BUR Abruzzo, delibere Molise, atti Marche, BUR Puglia, BUR Umbria, albi/concorsi ASL), da cui prende solo i link con titolo trasfusionale.
 2. Confronta con la memoria (`state/seen.json`) → tiene **solo i nuovi**.
 3. Claude redige le novità divise per regione.
 4. Il bot **posta un messaggio per regione** nel canale. La memoria viene aggiornata e committata.
